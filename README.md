@@ -1,2 +1,2 @@
 # ansible-lvm-backup
-Creat backup from lvm
+Createbackup from lvm
