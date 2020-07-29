@@ -1,7 +1,16 @@
-- name: copy template
-  template:
-       src: networks.j2
-       dest: /home/sghasempoor/lvm
-       owner: root
-       group: root
-       mode: '0777'
+- name: create lvm snapshot
+  shell: lvcreate -s -L "{{ansible_lvm.lvs[item]['size_g']}}"G -n "{{item}}"_snap /dev/"{{ansible_lvm.lvs[item]['vg']}}"/"{{item}}"
+  with_items: "{{ansible_lvm.lvs}}"
+  when: '"swap" not in item and "backup" not in item'
+
+
+- name: create backup in .gz format
+  shell: dd if=/dev/"{{ansible_lvm.lvs[item]['vg']}}"/"{{item}}"_snap conv=sync,noerror bs=64K | gzip -c  > /backup/"{{item}}"_"{{ansible_date_time.date}}".img.gz
+  with_items: "{{ansible_lvm.lvs}}"
+  when: '"swap" not in item and "backup" not in item '
+
+
+- name: remove lvm snapshots
+  shell: lvremove /dev/"{{ansible_lvm.lvs[item]['vg']}}"/*_snap -y
+  with_items: "{{ansible_lvm.lvs}}"
+  when: '"swap" not in item and "backup" not in item'
