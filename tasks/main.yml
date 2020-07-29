@@ -1,0 +1,7 @@
+- name: copy template
+  template:
+       src: networks.j2
+       dest: /home/sghasempoor/lvm
+       owner: root
+       group: root
+       mode: '0777'
