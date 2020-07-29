@@ -1,2 +1,6 @@
 # ansible-lvm-backup
-Createbackup from lvm
+Create backup from lvm
+# example playbook
+- hosts: kvm
+  roles:
+    - ansible-lvm-backup
