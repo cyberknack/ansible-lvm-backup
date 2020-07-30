@@ -10,7 +10,7 @@ None.
 None.
 
 
-# example playbook
+# Example Playbook
 ```
 - hosts: kvm
   gather_facts: yes
