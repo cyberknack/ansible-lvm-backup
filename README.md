@@ -13,6 +13,7 @@ None.
 # example playbook
 ```
 - hosts: kvm
+  gather_facts: yes
   roles:
    - ansible-lvm-backup
 ```
